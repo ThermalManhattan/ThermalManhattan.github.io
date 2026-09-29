@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ThermalManhattan: a drift-free, matching-free 3-DoF visual compass for night-time UAV thermal imagery, with a paired RGB-thermal UAV benchmark.">
+  <title>ThermalManhattan: Robust Thermal Compass under Radiometric Flatness in Manhattan World</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <style>
+    body { font-family: 'Noto Sans', sans-serif; }
+    .publication-title, .title { font-family: 'Google Sans', sans-serif; }
+    .publication-title { font-size: 2.6rem !important; line-height: 1.25; }
+    .publication-venue { font-family: 'Google Sans', sans-serif; font-size: 1.4rem; color: #555; margin-top: .5rem; }
+    .publication-authors { font-family: 'Google Sans', sans-serif; font-size: 1.2rem; }
+    .publication-authors a { color: hsl(204, 86%, 53%) !important; }
+    .publication-authors a:hover { text-decoration: underline; }
+    .author-block { display: inline-block; margin: 0 .25rem; }
+    .link-block a { margin: .3rem .15rem; }
+    .content.has-text-justified p { line-height: 1.7; }
+    .figure-caption { font-size: .95rem; color: #4a4a4a; margin-top: .75rem; }
+    .placeholder {
+      background: #f2f2f2; border: 2px dashed #bbb; color: #888;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 260px; border-radius: 6px; font-size: .95rem; text-align: center; padding: 1rem;
+    }
+    .table-container { overflow-x: auto; }
+    /* Two result tables side by side; flex-grow reflects their column counts. */
+    .results-row { display: flex; gap: 1.5rem; align-items: flex-start; }
+    .results-row > div { min-width: 0; }
+    @media screen and (max-width: 768px) {
+      .results-row { flex-direction: column; }
+      .results-row > div { flex: none !important; width: 100%; }
+    }
+    .compact-table { font-size: .78rem; }
+    .compact-table td, .compact-table th { padding: .3em .45em !important; vertical-align: middle; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    .footer { padding: 2rem 1.5rem; }
+  </style>
+</head>
+<body>
+
+<!-- ============ HERO: title, authors, buttons ============ -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+      <h1 class="title is-1 publication-title">ThermalManhattan: Robust Thermal Compass under Radiometric Flatness in Manhattan World</h1>
+      <div class="publication-venue">ACCV 2026</div>
+
+      <div class="is-size-5 publication-authors" style="margin-top:1rem;">
+        <span class="author-block"><a href="https://hyeon-ji-shin.github.io/">Hyeonji Shin</a>,</span>
+        <span class="author-block"><a href="https://junpyo-kim.vercel.app/">Junpyo Kim</a>,</span>
+        <span class="author-block"><a href="https://mpil-gist.github.io/people/Pyojin_Kim/">Pyojin Kim</a></span>
+      </div>
+      <div class="is-size-5 publication-authors">
+        <span class="author-block">Gwangju Institute of Science and Technology (GIST)</span>
+      </div>
+
+      <div class="publication-links" style="margin-top:1.25rem;">
+        <span class="link-block">
+          <a href="./static/docs/paper.pdf" class="button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+            <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span>
+          </a>
+        </span>
+        <span class="link-block">
+          <a href="./static/docs/supplementary.pdf" class="button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+            <span class="icon"><i class="fas fa-file-lines"></i></span><span>Supplementary</span>
+          </a>
+        </span>
+        <span class="link-block">
+          <a href="#dataset" class="button is-normal is-rounded is-dark">
+            <span class="icon"><i class="fas fa-database"></i></span><span>Dataset</span>
+          </a>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEASER (Fig. 1) ============ -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body" style="padding-top:0;">
+      <img src="./static/images/teaser.png"
+           alt="RGB-thermal radiometric flatness and point/line matching repeatability compared with ThermalManhattan">
+      <p class="figure-caption has-text-centered">
+        (Left) RGB is dark at night; thermal keeps weak texture but preserves structural boundaries.
+        (Right) Point/line matching across thermal frames is unreliable.
+      </p>
+      <h2 class="subtitle has-text-centered figure-caption" style="margin-top:1rem;">
+        At night, RGB carries too little light, and thermal imagery breaks inter-frame feature matching.
+        ThermalManhattan recovers the absolute 3-DoF camera orientation with respect to the Manhattan world
+        from every frame on its own, without line correspondence across frames.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABSTRACT ============ -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <!-- TODO: camera-ready 최종 abstract로 교체 -->
+        <div class="content has-text-justified">
+          <p>
+            We present a drift-free, matching-free 3-DoF visual compass for monocular thermal imagery.
+            Thermal cameras sense emitted radiation and operate regardless of illumination, but when surfaces
+            reach thermal equilibrium, their texture vanishes, so point features collapse and the genuine,
+            shape-preserving cues survive only as structural lines at object boundaries. Existing line-based
+            thermal approaches still match lines across frames, where lines are not extracted consistently from
+            frame to frame and tracking further degrades as the lines become too sparse. We instead avoid
+            inter-frame line matching and, to the best of our knowledge, are the first to bring the Manhattan
+            world (MW) assumption to thermal imagery, estimating the absolute camera orientation independently
+            for every frame. Given a gravity vector from the drone, we recover the remaining heading angle (yaw)
+            from structural lines, so each frame is fixed on its own and no drift accumulates across NUC drops
+            or aggressive motion. We collect six outdoor man-made UAV sequences and, since structure-from-motion
+            is unreliable on monocular thermal, build pseudo ground-truth (GT) trajectories with RTK-GPS priors.
+            We publicly release this benchmark, the first paired RGB&ndash;thermal night-time UAV dataset under
+            the MW assumption. On this benchmark, the proposed method outperforms existing rotation estimators
+            and stays stable over 20+ rotational loops on which the onboard gyro integrates 15&deg; of yaw drift
+            at the end.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ METHOD (Fig. 2) ============ -->
+<section class="section" style="padding-top:0;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Method</h2>
+    <img src="./static/images/pipeline.png" alt="ThermalManhattan pipeline">
+    <div class="content has-text-justified" style="margin-top:1rem;">
+      <p>
+        PLNet extracts structural lines from each thermal frame. The onboard gravity vector anchors the
+        Manhattan vertical, and the Mine-and-Stab (MnS) search resolves the single remaining degree of
+        freedom, yaw. A refinement step with a Cauchy loss on spherical line residuals then polishes the
+        rotation. Every frame yields an absolute orientation on its own, so a NUC freeze or an aggressive
+        maneuver affects only that frame and never propagates.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DATASET ============ -->
+<section class="section" id="dataset" style="padding-top:0;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Dataset</h2>
+    <img src="./static/images/dataset.png" alt="All six sequences of the ThermalManhattan benchmark">
+    <p class="figure-caption has-text-centered">
+      All six sequences of our benchmark. Each row shows representative RGB&ndash;thermal frame pairs.
+      The last column depicts the camera motion: per-frame yaw profiles for the pure-rotation sequences
+      (S-, N-, C-Buildings, top) and RTK-GPS trajectories color-coded by speed for the 6-DoF sequences
+      (S1 Building, Residential-closed/opened, bottom).
+    </p>
+    <div class="content has-text-justified" style="margin-top:1rem;">
+      <p>
+        Six paired RGB&ndash;thermal night-time sequences captured with a DJI Mavic 3T, recording
+        thermal (640&times;512, DFOV 61&deg;) and RGB (1920&times;1080, DFOV 84&deg;) at 30&nbsp;Hz,
+        in man-made outdoor scenes spanning medium-dark to extreme-dark illumination and motion from
+        pure rotation to full 6-DoF. Evaluation follows the motion regime: closed-loop consistency for
+        the pure-rotation sequences, and RTK-GPS-anchored COLMAP pseudo-GT for the 6-DoF sequences.
+        Calibration files are included.
+      </p>
+    </div>
+
+    <div class="table-container">
+      <table class="table is-fullwidth is-striped is-hoverable">
+        <thead>
+          <tr><th>Sequence</th><th>Light</th><th>Motion</th><th>Time</th><th>Evaluation</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>S-Buildings</td><td>Medium dark</td><td>Pure rotation, slow</td><td>40.4 s</td><td>Closed-loop consistency</td></tr>
+          <tr><td>N-Buildings</td><td>Medium dark</td><td>Pure rotation, fast, 5 loops</td><td>57.7 s</td><td>Closed-loop consistency</td></tr>
+          <tr><td>C-Buildings</td><td>Medium dark</td><td>Pure rotation, dynamic, 20+ loops</td><td>6 m 51 s</td><td>Closed-loop consistency</td></tr>
+          <tr><td>S1 Building</td><td>Medium dark</td><td>6-DoF, mid-fast, circle a building</td><td>10 m 17 s</td><td>RTK-GPS pseudo-GT</td></tr>
+          <tr><td>Residential-closed</td><td>Extreme dark</td><td>6-DoF, fast, loop closure</td><td>7 m 34 s</td><td>RTK-GPS pseudo-GT</td></tr>
+          <tr><td>Residential-opened</td><td>Extreme dark</td><td>6-DoF, no loop</td><td>5 m 48 s</td><td>RTK-GPS pseudo-GT</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="has-text-centered" style="margin-top:1rem;">
+      <!-- TODO: Drive 또는 신청 폼 링크 -->
+      <!-- TODO: request form 준비되면 이 href를 폼 주소로 교체 -->
+      <a href="https://drive.google.com/drive/folders/1Su1peKRSFJeA7Qjnt-AwjoTj5ZaIhp9j"
+         class="button is-medium is-rounded is-dark" target="_blank" rel="noopener">
+        <span class="icon"><i class="fab fa-google-drive"></i></span><span>Download the dataset</span>
+      </a>
+      <p class="figure-caption">
+        The dataset is released under
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> for research use.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section class="section" style="padding-top:0;">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Results</h2>
+    <p class="figure-caption has-text-centered" style="margin-top:0;">
+      After 25 full rotations over 411&nbsp;s on C-Buildings, our independently estimated per-frame
+      orientations stay consistent with a closed-loop error of 0.287&deg;, while the onboard gyro drifts
+      by about 15&deg; over the same loop.
+    </p>
+
+    <video controls loop playsinline preload="metadata" width="100%">
+      <source src="./static/videos/supplementary_video.mp4" type="video/mp4">
+    </video>
+
+    <div style="height:2rem;"></div>
+
+    <div class="results-row">
+
+      <div style="flex: 1 1 0;">
+        <h3 class="title is-6">Pure-rotation sequences</h3>
+        <p class="figure-caption" style="margin-top:0;">ARE (&deg;) by closed-loop consistency.</p>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-narrow compact-table">
+            <thead>
+              <tr><th>Method</th><th>S-Build.</th><th>N-Build.</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>SuperPoint + GlueStick</td><td>2.92</td><td>18.08</td></tr>
+              <tr><td>SuperPoint + Line + GlueStick</td><td>25.78</td><td>33.96</td></tr>
+              <tr><td>U-ARE-ME</td><td>8.14</td><td>27.05</td></tr>
+              <tr><td>H-VP</td><td>2.55</td><td>2.30</td></tr>
+              <tr><td>1-Line RANSAC*</td><td>1.20</td><td>179.55</td></tr>
+              <tr><td>MWMS</td><td><strong>0.33</strong></td><td>1.20</td></tr>
+              <tr><td><strong>Ours</strong></td><td>0.58</td><td><strong>0.62</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="flex: 1.25 1 0;">
+        <h3 class="title is-6">6-DoF sequences</h3>
+        <p class="figure-caption" style="margin-top:0;">ARE (&deg;) against RTK-anchored pseudo-GT.</p>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable is-narrow compact-table">
+            <thead>
+              <tr><th>Method</th><th>Resid.-closed</th><th>Resid.-opened</th><th>S1 Building</th></tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="4"><em>Rotation estimation</em></td></tr>
+              <tr><td>Point + GlueStick</td><td>66.45</td><td>48.05</td><td>96.85</td></tr>
+              <tr><td>Point / Line + GlueStick</td><td>84.45</td><td>99.61</td><td>90.12</td></tr>
+              <tr><td>U-ARE-ME</td><td>38.98</td><td>3.70</td><td>5.94</td></tr>
+              <tr><td>H-VP</td><td>30.08</td><td>2.19</td><td>2.15</td></tr>
+              <tr><td>1-Line RANSAC*</td><td>0.66</td><td>15.69</td><td>0.47</td></tr>
+              <tr><td>MWMS</td><td>0.97</td><td>1.10</td><td>0.73</td></tr>
+              <tr><td><strong>Ours</strong></td><td><strong>0.42</strong></td><td><strong>0.70</strong></td><td>0.44</td></tr>
+
+              <tr><td colspan="4"><em>Classical feature-based SLAM</em></td></tr>
+              <tr><td>PL-SLAM</td><td>&times;</td><td>&times;</td><td>&times;</td></tr>
+              <tr><td>ORB-SLAM3</td><td>1.59&dagger;</td><td>&times;</td><td>2.42&dagger;</td></tr>
+              <tr><td>Structure-PLP-SLAM</td><td>&times;</td><td>&times;</td><td>&times;</td></tr>
+
+              <tr><td colspan="4"><em>Learning-based dense SLAM</em></td></tr>
+              <tr><td>DROID-SLAM</td><td>1.58&dagger;</td><td>3.27&dagger;</td><td><strong>0.40</strong></td></tr>
+              <tr><td>HI-SLAM2</td><td>1.65</td><td>8.98&dagger;</td><td>0.41</td></tr>
+
+              <tr><td colspan="4"><em>Thermal-specific dense SLAM</em></td></tr>
+              <tr><td>PI-EAT-SLAM (Mono)</td><td>112.29</td><td>7.22</td><td>2.87&dagger;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="figure-caption">
+      Best per sequence in bold. Line-regularity methods (H-VP, 1-Line RANSAC*, MWMS, Ours) use the
+      onboard gravity prior; other baselines take monocular thermal input only.
+      *1-Line RANSAC: single-line solver with a confident gravity prior.
+      &times;: fails to initialize. &dagger;: ARE over the tracked subset only, before tracking failure.
+    </p>
+
+   
+  </div>
+</section>
+
+<!-- ============ BIBTEX ============ -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <div style="position:relative;">
+      <button id="bibtex-copy-btn" class="button is-small is-rounded is-dark" onclick="copyBibtex()"
+              style="position:absolute; top:.6rem; right:.6rem;">
+        <span class="icon"><i class="fas fa-copy"></i></span><span>Copy</span>
+      </button>
+<pre><code id="bibtex-code">@inproceedings{Shin_2026_ACCV,
+  title     = {ThermalManhattan: Robust Thermal Compass under Radiometric Flatness in Manhattan World},
+  author    = {Shin, Hyeonji and Kim, Junpyo and Kim, Pyojin},
+  booktitle = {Proceedings of the Asian Conference on Computer Vision (ACCV)},
+  month     = {December},
+  year      = {2026}
+}</code></pre>
+    </div>
+  </div>
+</section>
+<script>
+function copyBibtex() {
+  const text = document.getElementById('bibtex-code').innerText;
+  const btn = document.getElementById('bibtex-copy-btn');
+  const label = btn.querySelector('span:last-child');
+  const original = label.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    label.textContent = 'Copied!';
+    setTimeout(() => { label.textContent = original; }, 1500);
+  });
+}
+</script>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        This website is adapted from the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> template,
+        licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
